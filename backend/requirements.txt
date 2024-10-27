@@ -1,0 +1,4 @@
+fastapi
+uvicorn
+motor  # MongoDB async driver for Python
+pydantic
