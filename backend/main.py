@@ -25,4 +25,4 @@ async def create_item(item: Item):
 @app.get("/items/", response_model=list)
 async def read_items():
     items = await db["items"].find().to_list(100)
-    return [1, 2, 3]
+    return [1, 2, 3, 6]
