@@ -1,3 +1,5 @@
+version: '3.8'  # Asegúrate de tener una versión adecuada
+
 services:
   mongodb:
     image: mongo:4.4
@@ -20,10 +22,10 @@ services:
       - mongodb
 
   frontend:
-    build: ./frontend
+    build: ./frontend  
     container_name: frontend
     ports:
-      - "8080:8080"
+      - "5173:5173"
     depends_on:
       - backend
 
