@@ -1,5 +1,5 @@
-from typing import Optional
-from pymongo import MongoClient
+from typing import Any, Dict, List, Optional
+from pymongo import MongoClien, ASCENDING
 from pymongo.errors import ConnectionFailure
 from pymongo.database import Database
 
@@ -49,3 +49,20 @@ class MongoDataSource:
         collection = self.get_collection(collection_name)
         result = collection.insert_one(document)
         return str(result.inserted_id)
+    
+    def find_one(self, collection_name: str, query: dict):
+        collection = self.get_collection(collection_name)
+        return collection.find_one(query)
+    
+    def find_many(self, 
+                  collection_name: str,
+                  query: Dict[str, Any] = {},
+                  sort_by: str = "_id",
+                  sort_direction: int = ASCENDING,
+                  limit: int = 0,
+                  skip: int = 0
+                  ) -> List[Dict[str, Any]]:
+    
+        collection = self.get_collection(collection_name)
+        cursor = collection.find(query).sort(sort_by, sort_direction).skip(skip).limit(limit)
+        return list(cursor)
