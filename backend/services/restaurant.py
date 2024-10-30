@@ -1,3 +1,4 @@
+from schemas.menu import MenuItem
 from schemas.restaurant import Restaurant
 from schemas.input_create_restaurant import InputCreateRestaurant
 from db.repositories.restaurant import RestaurantRepository
@@ -20,3 +21,8 @@ class RestaurantService:
             instagram = input_create_restaurant.instagram,
             timetable = input_create_restaurant.timetable
         )
+        
+    def add_menu_item_to_menu(menu_item: MenuItem, restaurant_id: str, restaurant_repository: RestaurantRepository):
+        
+        
+        
