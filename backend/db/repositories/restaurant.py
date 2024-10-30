@@ -23,11 +23,11 @@ class RestaurantRepository:
                               restaurant_id: str) -> str:
         
         menu_item_document = menu_item.dict()
-        menu_ids = self.get_menu_id(restaurant_id=restaurant_id)
+        menu_mongo_id = self.get_menu_mongo_id(restaurant_id=restaurant_id)
         
-        menu_item_document["menu_ids"] = menu_ids
+        menu_item_document["menu_mongo_id"] = menu_mongo_id
         
-        
-        return self._mongo_datasource.insert_one(collection_name=self._menus_collection_name,
-                                                 document=menu_item_document)
+        return self._mongo_datasource.update_one(collection_name=self._menus_collection_name,
+                                                 query={"_id":menu_mongo_id},
+                                                 update={"$push":{"items":menu_item_document}})
         
