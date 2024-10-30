@@ -1,5 +1,5 @@
 from pydantic import BaseModel
 
 class Restaurant(BaseModel):
-    
-    restaurant_id: str
+    # !TODO: Create complete DTO
+    restaurant_id: str  

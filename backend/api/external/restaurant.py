@@ -1,6 +1,5 @@
 from db.repositories.restaurant import RestaurantRepository
 from core.dependencies import get_mongo_ds
-from core.settings import ProjectSettings
 from services.restaurant import RestaurantService
 from fastapi import APIRouter, status, Depends
 
