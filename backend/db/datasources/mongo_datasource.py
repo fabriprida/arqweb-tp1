@@ -54,15 +54,63 @@ class MongoDataSource:
         collection = self.get_collection(collection_name)
         return collection.find_one(query)
     
-    def find_many(self, 
-                  collection_name: str,
-                  query: Dict[str, Any] = {},
-                  sort_by: str = "_id",
-                  sort_direction: int = ASCENDING,
-                  limit: int = 0,
-                  skip: int = 0
-                  ) -> List[Dict[str, Any]]:
-    
+    def find_one(self, collection_name: str, query: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Find a single document in a collection."""
         collection = self.get_collection(collection_name)
-        cursor = collection.find(query).sort(sort_by, sort_direction).skip(skip).limit(limit)
+        return collection.find_one(query)
+
+
+    def aggregate(self, collection_name: str, pipeline: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Perform an aggregation operation on a collection.
+
+        Args:
+            collection_name (str): Name of the collection to aggregate.
+            pipeline (List[Dict[str, Any]]): The aggregation pipeline to execute.
+
+        Returns:
+            List[Dict[str, Any]]: The result of the aggregation operation.
+        """
+        collection = self.get_collection(collection_name)
+        try:
+            result = list(collection.aggregate(pipeline))
+            return result
+        except Exception as e:
+            raise Exception(f"Aggregation failed: {str(e)}")
+
+
+    def find_many(self,
+                collection_name: str,
+                query: Dict[str, Any] = {},
+                sort_by: str = '_id',
+                sort_direction: int = ASCENDING,
+                limit: int = 0,
+                skip: int = 0) -> List[Dict[str, Any]]:
+        """
+        Find multiple documents in a collection with filtering and pagination.
+
+        Args:
+            collection_name (str): Name of the collection to query.
+            query (Dict[str, Any], optional): Query filter. Defaults to {}.
+            sort_by (str, optional): Field to sort by. Defaults to '_id'.
+            sort_direction (int, optional): Sort direction (ASCENDING or DESCENDING). Defaults to ASCENDING.
+            limit (int, optional): Maximum number of documents to return. Defaults to 10.
+            skip (int, optional): Number of documents to skip. Defaults to 0.
+
+        Returns:
+            List[Dict[str, Any]]: List of documents matching the query and pagination parameters.
+        """
+        collection = self.get_collection(collection_name)
+        cursor = collection.find(query)
+        cursor = cursor.sort(sort_by, sort_direction)
+        cursor = cursor.skip(skip).limit(limit)
         return list(cursor)
+
+
+    def distinct(self, distinct_column: str, collection_name: str, sort: int = 0):
+        pipeline = [
+            {"$group": {"_id": f"${distinct_column}"}},
+            {"$sort": {"_id": sort}}
+        ]
+        fields = self.aggregate(collection_name, pipeline)
+        return [field["_id"] for field in fields]
