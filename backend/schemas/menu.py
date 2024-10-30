@@ -3,7 +3,6 @@ from schemas.timetable import Timetable
 from pydantic import BaseModel, Field
 
 class MenuItem(BaseModel):
-    mongo_id: str = Field(..., example="...")
     menu_mongo_id: str = Field(..., example="...")
     name: str = Field(..., example="Pizza")
     description: str = Field(..., example="Delicious pizza")
@@ -15,7 +14,6 @@ class InputMenuItemCreation(BaseModel):
     price: float = Field(..., example=10.99)
 
 example_menu_item = MenuItem(
-    mongo_id="123",
     menu_mongo_id="123456789",
     name="Pizza",
     description="Delicious pizza",
