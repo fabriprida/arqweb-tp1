@@ -1,4 +1,4 @@
-from schemas.menu import MenuItem, Menu
+from schemas.menu import InputMenuItemCreation, MenuItem, Menu
 from db.repositories.restaurant import RestaurantRepository
 from core.dependencies import get_mongo_ds
 from services.restaurant import RestaurantService
@@ -27,11 +27,11 @@ async def create_restaurant(
 @router.post(
     "/{restaurant_id}/menu",
     status_code=status.HTTP_201_CREATED,
-    response_model=Menu
+    response_model=MenuItem
 )
 async def add_menu_item_to_menu(
     restaurant_id: str,
-    menu_item: MenuItem,
+    menu_item: InputMenuItemCreation,
     mongo_ds=Depends(get_mongo_ds)
 ):
     return RestaurantService.add_menu_item_to_menu(menu_item=menu_item,
