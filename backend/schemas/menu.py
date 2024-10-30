@@ -22,5 +22,5 @@ example_menu_item = MenuItem(
 
 class Menu(BaseModel):
     mongo_id: str = Field(..., example="...")
-    restaurant_id: str = Field(..., example="6722a6e1590f3dd285a31b03")
+    restaurant_mongo_id: str = Field(..., example="6722a6e1590f3dd285a31b03")
     items: List[MenuItem] = Field(...,example=[example_menu_item])
