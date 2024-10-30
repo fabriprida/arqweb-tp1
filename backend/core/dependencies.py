@@ -7,7 +7,8 @@ def get_mongo_ds():
     mongo_data_source = MongoDataSource(host=settings.MongoDBHost, 
                     port=settings.MongoDBPort, 
                     username=settings.MongoDBUser, 
-                    password=settings.MongoDBPassword)
+                    password=settings.MongoDBPassword,
+                    database=settings.MongoDBName)
     try:
         yield mongo_data_source
     finally:

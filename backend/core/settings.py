@@ -8,6 +8,7 @@ class ProjectSettings(BaseSettings):
     MongoDBPort: str
     MongoDBUser: str
     MongoDBPassword: str
+    MongoDBName: str
     
     class Config:
         env_file = ".env"

@@ -1,6 +1,7 @@
+from core.dependencies import get_mongo_ds
 from core.settings import ProjectSettings
 from services.restaurant import RestaurantService
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, Depends
 
 from schemas.input_create_restaurant import InputCreateRestaurant
 from schemas.restaurant import Restaurant
@@ -29,11 +30,12 @@ async def get_restaurant(
     return settings.TEST
 
 @router.post(
-    "test/{restaurant_id}",
+    "/test/{restaurant_id}",
     response_model=int
 )
 async def test(
-    restaurant_id: int
+    restaurant_id: int,
+    mongo_ds = Depends(get_mongo_ds)
 ):
-    RestaurantService.create2(restaurant_id)
+    RestaurantService.create2(restaurant_id, mongo_ds)
     return restaurant_id
