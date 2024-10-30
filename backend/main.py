@@ -1,8 +1,6 @@
 from fastapi import FastAPI
-from external.restaurant import router as restaurant_router
+from api.external.restaurant import router as restaurant_router
 from dotenv import load_dotenv
-
-load_dotenv()
 
 app = FastAPI()
 

@@ -2,3 +2,5 @@ fastapi
 uvicorn
 motor  # MongoDB async driver for Python
 pydantic
+pydantic-settings
+python-dotenv

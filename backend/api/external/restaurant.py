@@ -1,3 +1,4 @@
+from core.settings import ProjectSettings
 from services.restaurant import RestaurantService
 from fastapi import APIRouter, status
 
@@ -19,9 +20,10 @@ async def create_restaurant(
 
 @router.get(
     "/get/{restaurant_id}",
-    response_model=Restaurant
+    response_model=int
 )
 async def get_restaurant(
     restaurant_id: int
 ):
-    return restaurant_id
+    settings = ProjectSettings()
+    return settings.TEST
