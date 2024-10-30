@@ -2,16 +2,21 @@ services:
   mongodb:
     image: mongo:4.4
     container_name: mongodb
+    env_file:
+      - ./backend/.env
     ports:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
-
+    environment:  # !TODO: Pasar a .env (dificil)
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    
   backend:
     build: ./backend
     container_name: backend
-    environment:
-      - MONGO_URI=mongodb://mongodb:27017
+    env_file:
+      - ./backend/.env
     volumes:
       - ./backend:/app
     ports:
