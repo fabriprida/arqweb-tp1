@@ -14,9 +14,14 @@ class RestaurantRepository:
         self._menus_collection_name = "menus"
 
     def create_restaurant(self, input_create_restaurant: InputCreateRestaurant) -> str:
+                
+        restaurant_mongo_id = self._mongo_datasource.insert_one(collection_name=self._restaurants_collection_name, 
+                                                                document=input_create_restaurant.dict())
         
-        return self._mongo_datasource.insert_one(collection_name=self._restaurants_collection_name, 
-                                                 document=input_create_restaurant.dict())
+        self._create_menu(restaurant_mongo_id=restaurant_mongo_id)
+        
+        return restaurant_mongo_id
+    
     
     def add_menu_item_to_menu(self, 
                               menu_item: InputMenuItemCreation, 
@@ -27,7 +32,9 @@ class RestaurantRepository:
         
         menu_item_document["menu_mongo_id"] = menu_mongo_id
         
-        return self._mongo_datasource.update_one(collection_name=self._menus_collection_name,
-                                                 query={"_id":menu_mongo_id},
-                                                 update={"$push":{"items":menu_item_document}})
+        self._mongo_datasource.update_one(collection_name=self._menus_collection_name,
+                                          query={"_id":menu_mongo_id},
+                                          update={"$push":{"items":menu_item_document}})
+
+        return menu_mongo_id
         
