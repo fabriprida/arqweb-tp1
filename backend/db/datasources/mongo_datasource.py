@@ -1,5 +1,5 @@
 from typing import Any, Dict, List, Optional
-from pymongo import MongoClien, ASCENDING
+from pymongo import MongoClient, ASCENDING
 from pymongo.errors import ConnectionFailure
 from pymongo.database import Database
 

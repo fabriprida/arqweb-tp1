@@ -1,4 +1,5 @@
 from pydantic import BaseModel
 
 class Restaurant(BaseModel):
-    pass
+    
+    restaurant_id: str

@@ -18,9 +18,10 @@ async def create_restaurant(
     input_create_restaurant: InputCreateRestaurant,
     mongo_ds=Depends(get_mongo_ds)
 ):
-    return RestaurantService.create_restaurant(input_create_restaurant=input_create_restaurant,
+    restaurant_id = RestaurantService.create_restaurant(input_create_restaurant=input_create_restaurant,
                                                restaurant_repository=RestaurantRepository(mongo_ds))
 
+    return Restaurant(restaurant_id=restaurant_id)
 
 @router.get(
     "/get/{restaurant_id}",
