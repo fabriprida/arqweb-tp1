@@ -22,13 +22,3 @@ async def create_restaurant(
                                                restaurant_repository=RestaurantRepository(mongo_ds))
 
     return Restaurant(restaurant_id=restaurant_id)
-
-@router.get(
-    "/get/{restaurant_id}",
-    response_model=int
-)
-async def get_restaurant(
-    restaurant_id: int
-):
-    settings = ProjectSettings()
-    return settings.TEST
