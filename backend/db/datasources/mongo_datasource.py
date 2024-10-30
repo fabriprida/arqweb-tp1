@@ -17,6 +17,7 @@ class MongoDataSource:
         self._client: Optional[MongoClient] = None
         self._connect()
 
+
     def _connect(self):
        try:
             self._client = MongoClient(host=self._host, 
@@ -28,3 +29,8 @@ class MongoDataSource:
 
         except ConnectionFailure:
             raise ConnectionError("Failed to connect to MongoDB")
+       
+
+    def insert_one(self, collection_name: str, document: dict):
+        result = self._client[collection_name].insert_one(document)
+        return str(result.inserted_id)
