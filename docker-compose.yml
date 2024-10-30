@@ -6,11 +6,11 @@ services:
       - ./backend/.env
     ports:
       - "27017:27017"
-    environment:  # !TODO: Not working
-      - MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME
-      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
     volumes:
       - mongo_data:/data/db
+    environment:  # !TODO: Not working
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
     
   backend:
     build: ./backend

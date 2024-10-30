@@ -10,3 +10,9 @@ class RestaurantRepository:
 
     def _initialize_collection_names(self):
         self._restaurants_collection_name = "restaurants"
+
+    def create_restaurant(self, id: int):
+        restaurant = {
+            "id": id
+        }
+        return self._mongo_datasource.insert_one(self._restaurants_collection_name, restaurant)

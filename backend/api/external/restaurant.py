@@ -27,3 +27,13 @@ async def get_restaurant(
 ):
     settings = ProjectSettings()
     return settings.TEST
+
+@router.post(
+    "test/{restaurant_id}",
+    response_model=int
+)
+async def test(
+    restaurant_id: int
+):
+    RestaurantService.create2(restaurant_id)
+    return restaurant_id
