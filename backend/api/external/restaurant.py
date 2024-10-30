@@ -17,7 +17,17 @@ async def create_restaurant(
     input_create_restaurant: InputCreateRestaurant,
     mongo_ds=Depends(get_mongo_ds)
 ):
-    restaurant_id = RestaurantService.create_restaurant(input_create_restaurant=input_create_restaurant,
+    mongo_id = RestaurantService.create_restaurant(input_create_restaurant=input_create_restaurant,
                                                restaurant_repository=RestaurantRepository(mongo_ds))
 
-    return Restaurant(restaurant_id=restaurant_id)
+    return Restaurant(
+        mongo_id = mongo_id,
+        name = input_create_restaurant.name,
+        latitude = input_create_restaurant.latitude,
+        longitude = input_create_restaurant.longitude,
+        address = input_create_restaurant.address,
+        phone_number = input_create_restaurant.phone_number,
+        email = input_create_restaurant.email,
+        instagram = input_create_restaurant.instagram,
+        timetable = input_create_restaurant.timetable
+    )
