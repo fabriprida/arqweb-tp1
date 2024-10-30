@@ -9,11 +9,6 @@ app = FastAPI()
 client = AsyncIOMotorClient(os.getenv("MONGO_URI", "mongodb://localhost:27017"))
 db = client.my_database
 
-# Pydantic Model for our data
-class Item(BaseModel):
-    name: str
-    description: str = None
-
 # Routes
 @app.post("/items/", response_model=dict)
 async def create_item(item: Item):
