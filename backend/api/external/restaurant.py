@@ -1,3 +1,4 @@
+from db.repositories.restaurant import RestaurantRepository
 from core.dependencies import get_mongo_ds
 from core.settings import ProjectSettings
 from services.restaurant import RestaurantService
@@ -14,9 +15,11 @@ router = APIRouter()
     response_model=Restaurant
 )
 async def create_restaurant(
-    input_create_restaurant: InputCreateRestaurant
+    input_create_restaurant: InputCreateRestaurant,
+    mongo_ds=Depends(get_mongo_ds)
 ):
-    return RestaurantService.create(input_create_restaurant)
+    return RestaurantService.create_restaurant(input_create_restaurant=input_create_restaurant,
+                                               restaurant_repository=RestaurantRepository(mongo_ds))
 
 
 @router.get(
@@ -28,14 +31,3 @@ async def get_restaurant(
 ):
     settings = ProjectSettings()
     return settings.TEST
-
-@router.post(
-    "/test/{restaurant_id}",
-    response_model=int
-)
-async def test(
-    restaurant_id: int,
-    mongo_ds = Depends(get_mongo_ds)
-):
-    RestaurantService.create2(restaurant_id, mongo_ds)
-    return restaurant_id

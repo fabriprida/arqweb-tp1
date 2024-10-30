@@ -1,10 +1,9 @@
-from db.datasources.mongo_datasource import MongoDataSource
+from schemas.input_create_restaurant import InputCreateRestaurant
 from db.repositories.restaurant import RestaurantRepository
 
 
 class RestaurantService:
-   def create2(restaurant_id: int, mongo_ds: MongoDataSource):
+   
+   def create_restaurant(input_create_restaurant: InputCreateRestaurant, restaurant_repository: RestaurantRepository):
        
-       repo = RestaurantRepository(mongo_ds)
-       repo.create_restaurant(restaurant_id)
-       return restaurant_id
+       return restaurant_repository.create_restaurant(input_create_restaurant)
