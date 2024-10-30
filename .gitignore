@@ -1,0 +1,52 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+env/
+venv/
+ENV/
+.venv/
+.env/
+.venv/
+
+# IDE settings
+.idea/
+.vscode/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# Test and coverage reports
+htmlcov/
+.coverage
+.coverage.*
+nosetests.xml
+*.cover
+*.log
+*.pot
+*.pyc
+
+# Jupyter Notebook files
+.ipynb_checkpoints
+*.ipynb
+
+# Migrations for Django
+migrations/
+
+# Database files
+*.sqlite3
+*.db
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Python environment variable files
+.env
