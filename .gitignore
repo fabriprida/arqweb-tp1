@@ -9,6 +9,7 @@ ENV/
 .venv/
 .env/
 .venv/
+.env*
 
 # IDE settings
 .idea/
