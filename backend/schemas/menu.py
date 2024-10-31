@@ -1,5 +1,4 @@
 from typing import List
-from schemas.timetable import Timetable
 from pydantic import BaseModel, Field
 
 class MenuItem(BaseModel):

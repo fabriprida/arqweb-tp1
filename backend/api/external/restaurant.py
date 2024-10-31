@@ -1,11 +1,10 @@
-from schemas.menu import InputMenuItemCreation, MenuItem, Menu
+from schemas.menu import InputMenuItemCreation
 from db.repositories.restaurant import RestaurantRepository
 from core.dependencies import get_mongo_ds
 from services.restaurant import RestaurantService
 from fastapi import APIRouter, status, Depends
 
 from schemas.input_create_restaurant import InputCreateRestaurant
-from schemas.restaurant import Restaurant
 
 router = APIRouter()
 

@@ -1,5 +1,4 @@
-from schemas.menu import InputMenuItemCreation, MenuItem
-from schemas.restaurant import Restaurant
+from schemas.menu import InputMenuItemCreation
 from schemas.input_create_restaurant import InputCreateRestaurant
 from db.repositories.restaurant import RestaurantRepository
 
