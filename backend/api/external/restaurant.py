@@ -1,3 +1,4 @@
+from schemas.menu import InputMenuItemCreation, MenuItem, Menu
 from db.repositories.restaurant import RestaurantRepository
 from core.dependencies import get_mongo_ds
 from services.restaurant import RestaurantService
@@ -11,23 +12,29 @@ router = APIRouter()
 @router.post(
     "/create",
     status_code=status.HTTP_201_CREATED,
-    response_model=Restaurant
+    response_model=str
 )
 async def create_restaurant(
     input_create_restaurant: InputCreateRestaurant,
     mongo_ds=Depends(get_mongo_ds)
-):
-    mongo_id = RestaurantService.create_restaurant(input_create_restaurant=input_create_restaurant,
+) -> str:
+    return RestaurantService.create_restaurant(input_create_restaurant=input_create_restaurant,
                                                restaurant_repository=RestaurantRepository(mongo_ds))
 
-    return Restaurant(
-        mongo_id = mongo_id,
-        name = input_create_restaurant.name,
-        latitude = input_create_restaurant.latitude,
-        longitude = input_create_restaurant.longitude,
-        address = input_create_restaurant.address,
-        phone_number = input_create_restaurant.phone_number,
-        email = input_create_restaurant.email,
-        instagram = input_create_restaurant.instagram,
-        timetable = input_create_restaurant.timetable
-    )
+    
+
+
+@router.post(
+    "/{restaurant_id}/menu",
+    status_code=status.HTTP_201_CREATED,
+    response_model=str
+)
+async def add_menu_item_to_menu(
+    restaurant_id: str,
+    menu_item: InputMenuItemCreation,
+    mongo_ds=Depends(get_mongo_ds)
+) -> str:
+    return RestaurantService.add_menu_item_to_menu(menu_item=menu_item,
+                                                   restaurant_id=restaurant_id,
+                                                   restaurant_repository=RestaurantRepository(mongo_ds))
+                                        

@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 
 class Restaurant(BaseModel):
     # !TODO: Create complete DTO
-    mongo_id: str 
+    mongo_id: str = Field(...)
     name: str = Field(...)
     
     latitude: str = Field(...)
