@@ -50,10 +50,11 @@ class MongoDataSource:
         result = collection.insert_one(document)
         return str(result.inserted_id)
     
-    def find_one(self, collection_name: str, query: dict):
+    def update_one(self, collection_name: str, query: Dict[str, Any], update: Dict[str, Any]):
         collection = self.get_collection(collection_name)
-        return collection.find_one(query)
-    
+        result = collection.update_one(query, update)
+        return result.modified_count
+
     def find_one(self, collection_name: str, query: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """Find a single document in a collection."""
         collection = self.get_collection(collection_name)
