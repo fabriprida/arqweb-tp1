@@ -1,3 +1,5 @@
+from typing import List
+from schemas.restaurant import Restaurant
 from schemas.menu import InputMenuItemCreation
 from db.repositories.restaurant import RestaurantRepository
 from core.dependencies import get_mongo_ds
@@ -20,8 +22,6 @@ async def create_restaurant(
     return RestaurantService.create_restaurant(input_create_restaurant=input_create_restaurant,
                                                restaurant_repository=RestaurantRepository(mongo_ds))
 
-    
-
 
 @router.post(
     "/{restaurant_id}/menu",
@@ -36,4 +36,16 @@ async def add_menu_item_to_menu(
     return RestaurantService.add_menu_item_to_menu(menu_item=menu_item,
                                                    restaurant_id=restaurant_id,
                                                    restaurant_repository=RestaurantRepository(mongo_ds))
-                                        
+
+@router.get(
+    "/list",
+    status_code=status.HTTP_200_OK,
+    response_model=List[Restaurant]
+)
+async def list_restaurants(
+    input_list_restaurants: InputListRestaurants,
+    mongo_ds=Depends(get_mongo_ds)
+) -> List[Restaurant]:
+    
+    return RestaurantService.list_restaurants(input_list_restaurants=input_list_restaurants,
+                                              restaurant_repository=RestaurantRepository(mongo_ds))
