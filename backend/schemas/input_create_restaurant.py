@@ -1,5 +1,4 @@
-from pydantic import Field
-from pydantic import BaseModel 
+from pydantic import Field, BaseModel 
 from schemas.timetable import Timetable
 
 example_timetable = Timetable(timetable={"Monday": [{"opening_time": "12:00", "closing_time": "20:00"}],

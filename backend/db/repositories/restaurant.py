@@ -1,4 +1,4 @@
-from backend.db.models.menu import InputMenuItemCreation
+from schemas.input_menu_item_creation import InputMenuItemCreation
 from schemas.input_create_restaurant import InputCreateRestaurant
 from db.datasources.mongo_datasource import MongoDataSource
 
