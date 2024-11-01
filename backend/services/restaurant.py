@@ -1,4 +1,7 @@
-from schemas.menu import InputMenuItemCreation
+from typing import List
+from db.models.restaurant import Restaurant
+from schemas.input_list_restaurants import InputListRestaurants
+from schemas.input_menu_item_creation import InputMenuItemCreation
 from schemas.input_create_restaurant import InputCreateRestaurant
 from db.repositories.restaurant import RestaurantRepository
 
@@ -22,3 +25,8 @@ class RestaurantService:
         menu_item_mongo_id = restaurant_repository.add_menu_item_to_menu(menu_item, restaurant_id) 
         
         return menu_item_mongo_id
+    
+    def list_restaurants(input_list_restaurants: InputListRestaurants,
+                         restaurant_repository: RestaurantRepository) -> List[Restaurant]:
+        
+        return restaurant_repository.list_restaurants(input_list_restaurants)

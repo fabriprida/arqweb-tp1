@@ -1,6 +1,10 @@
-from schemas.menu import InputMenuItemCreation
+from typing import List
+from core.mappers.mongo_restaurant import map_mongo_to_restaurant_model
+from db.models.restaurant import Restaurant
+from schemas.input_menu_item_creation import InputMenuItemCreation
 from schemas.input_create_restaurant import InputCreateRestaurant
 from db.datasources.mongo_datasource import MongoDataSource
+from bson import ObjectId
 
 class RestaurantRepository:
 
@@ -49,3 +53,19 @@ class RestaurantRepository:
                                                query={"restaurant_mongo_id":restaurant_id})
         
         return str(menu["_id"])
+    
+
+    def list_restaurants(self, input_list_restaurants) -> List[Restaurant]:
+            
+            query = {}
+            
+            if input_list_restaurants.name:
+                query["name"] = input_list_restaurants.name
+            
+            if input_list_restaurants.restaurant_mongo_id:
+                query["_id"] = ObjectId(input_list_restaurants.restaurant_mongo_id)
+            
+            restaurants = self._mongo_datasource.find_many(collection_name=self._restaurants_collection_name,
+                                                           query=query)
+            
+            return [map_mongo_to_restaurant_model(restaurant) for restaurant in restaurants]

@@ -7,11 +7,6 @@ class MenuItem(BaseModel):
     description: str = Field(..., example="Delicious pizza")
     price: float = Field(..., example=10.99)
 
-class InputMenuItemCreation(BaseModel):
-    name: str = Field(..., example="Pizza")
-    description: str = Field(..., example="Delicious pizza")
-    price: float = Field(..., example=10.99)
-
 example_menu_item = MenuItem(
     menu_mongo_id="123456789",
     name="Pizza",
