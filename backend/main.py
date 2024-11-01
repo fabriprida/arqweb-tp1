@@ -5,7 +5,7 @@ from api.external.restaurant import router as restaurant_router
 app = FastAPI()
 
 origins = [
-    "http://localhost:5173",  # Allow frontend to access the backend
+    "http://localhost:5173",   # !TODO: Move to .env
 ]
 
 app.add_middleware(

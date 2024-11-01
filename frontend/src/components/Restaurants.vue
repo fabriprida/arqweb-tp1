@@ -21,7 +21,7 @@ export default {
     methods: {
         async fetchRestaurantList() {
             try {
-                const response = await axios.get('http://localhost:8000/internal/restaurant/list');
+                const response = await axios.get('http://localhost:8000/internal/restaurant/list'); // !TODO: Move to .env
                 this.items = response.data;
             } catch (error) {
                 console.error('Error fetching the list:', error);
