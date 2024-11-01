@@ -1,11 +1,11 @@
 from typing import List
-from backend.db.models.restaurant import Restaurant
+from db.models.restaurant import Restaurant
 from schemas.input_menu_item_creation import InputMenuItemCreation
 from schemas.input_list_restaurants import InputListRestaurants
 from db.repositories.restaurant import RestaurantRepository
 from core.dependencies import get_mongo_ds
 from services.restaurant import RestaurantService
-from fastapi import APIRouter, status, Depends
+from fastapi import APIRouter, status, Query, Depends
 
 from schemas.input_create_restaurant import InputCreateRestaurant
 
@@ -44,7 +44,7 @@ async def add_menu_item_to_menu(
     response_model=List[Restaurant]
 )
 async def list_restaurants(
-    input_list_restaurants: InputListRestaurants,
+    input_list_restaurants: InputListRestaurants = Query(),
     mongo_ds=Depends(get_mongo_ds)
 ) -> List[Restaurant]:
     
