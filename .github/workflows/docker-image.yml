@@ -1,20 +1,17 @@
 name: Docker Compose CI
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+on: [push]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Docker Compose
-      run: sudo apt-get install docker-compose
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Build and run services
+      env:
+        MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
+        MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
       run: docker-compose up --build -d
-    - name: Shut down services
-      run: docker-compose down
