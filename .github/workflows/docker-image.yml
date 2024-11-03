@@ -33,8 +33,8 @@ jobs:
 
     - name: Tag images for ECR
       run: |
-        docker tag arqweb-tp1_backend ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/arqweb-tp1_backend:latest
-        docker tag arqweb-tp1_frontend ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/arqweb-tp1_frontend:latest
+        docker tag arqweb-tp1_backend:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/arqweb-tp1_backend:latest
+        docker tag arqweb-tp1_frontend:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/arqweb-tp1_frontend:latest
 
     - name: Push images to AWS ECR
       run: |
