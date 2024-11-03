@@ -25,5 +25,5 @@ jobs:
     
       run: |
         docker login -u santiagopla -p ${{ secrets.DOCKER_HUB_TOKEN }}
-        docker push santiagopla/arqweb-tp1-backend:latest
-        docker push santiagopla/arqweb-tp1-frontend:latest
+        docker push arqweb-tp1-backend:latest
+        docker push arqweb-tp1-frontend:latest
