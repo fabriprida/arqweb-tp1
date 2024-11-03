@@ -21,14 +21,23 @@ jobs:
         MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
       run: docker-compose build
 
-    - name: Tag images for Docker Hub
+    - name: Install AWS CLI
       run: |
-        docker tag arqweb-tp1_backend ${{ secrets.DOCKER_HUB_USERNAME }}/arqweb-tp1_backend:latest
-        docker tag arqweb-tp1_frontend ${{ secrets.DOCKER_HUB_USERNAME }}/arqweb-tp1_frontend:latest
-      
-    - name: push image to docker hub
+        sudo apt-get install -y unzip
+        curl "https://d1wnz8v8q0z55w.cloudfront.net/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip awscliv2.zip
+        sudo ./aws/install
     
+    - name: Log in to AWS ECR
       run: |
-        docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_TOKEN }}
-        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/arqweb-tp1_backend:latest
-        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/arqweb-tp1_frontend:latest
+        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
+
+    - name: Tag images for ECR
+      run: |
+        docker tag arqweb-tp1_backend ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/arqweb-tp1_backend:latest
+        docker tag arqweb-tp1_frontend ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/arqweb-tp1_frontend:latest
+
+    - name: Push images to AWS ECR
+      run: |
+        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/arqweb-tp1_backend:latest
+        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/arqweb-tp1_frontend:latest
