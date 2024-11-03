@@ -20,11 +20,15 @@ jobs:
         MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
         MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
       run: docker-compose build
-    
+
+    - name: Tag images for Docker Hub
+      run: |
+        docker tag arqweb-tp1_backend ${{ secrets.DOCKER_HUB_USERNAME }}/arqweb-tp1_backend:latest
+        docker tag arqweb-tp1_frontend ${{ secrets.DOCKER_HUB_USERNAME }}/arqweb-tp1_frontend:latest
       
     - name: push image to docker hub
     
       run: |
-        docker login -u santiagopla -p ${{ secrets.DOCKER_HUB_TOKEN }}
-        docker push santiagopla/arqweb-tp1_backend:latest
-        docker push santiagopla/arqweb-tp1_frontend:latest
+        docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_TOKEN }}
+        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/arqweb-tp1_backend:latest
+        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/arqweb-tp1_frontend:latest
