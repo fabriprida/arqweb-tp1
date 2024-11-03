@@ -19,7 +19,10 @@ jobs:
       env:
         MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
         MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
-      run: docker-compose up --build -t santiagopla/arqweb-tp1:latest
+      run: docker-compose up --build
 
     - name: push image to docker hub
-      run: docker push santiagopla/arqweb-tp1:latest
+    
+      run: |
+        docker login -u santiagopla -p ${{ secrets.DOCKER_HUB_TOKEN }}
+        docker push santiagopla/arqweb-tp1:latest
