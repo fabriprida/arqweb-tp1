@@ -15,10 +15,7 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y docker-compose
     - name: build
-      env:
-        MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
-        MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
-      run: docker-compose build
+      run: docker-compose -f docker-compose-prod.yml build
 
     - name: Tag images for Docker Hub
       run: |
