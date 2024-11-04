@@ -13,6 +13,8 @@ services:
   backend:
     build: ./backend
     container_name: backend
+    env_file:
+      - .env
     volumes:
       - ./backend:/app
     ports:
@@ -24,6 +26,8 @@ services:
   frontend:
     build: ./frontend
     container_name: frontend
+    env_file:
+      - .env
     ports:
       - "5173:5173"
     depends_on:
