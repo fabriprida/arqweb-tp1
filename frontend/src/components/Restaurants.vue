@@ -10,6 +10,7 @@
 
 <script>
 import axios from 'axios';
+const backendUrl = process.env.BACKEND_URL;
 
 export default {
     name: 'App',
@@ -21,7 +22,7 @@ export default {
     methods: {
         async fetchRestaurantList() {
             try {
-                const response = await axios.get('http://localhost:8000/internal/restaurant/list'); // !TODO: Move to .env
+                const response = await axios.get(backendUrl+'/internal/restaurant/list');
                 this.items = response.data;
             } catch (error) {
                 console.error('Error fetching the list:', error);

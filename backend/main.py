@@ -1,11 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from api.external.restaurant import router as restaurant_router
+from core.settings import ProjectSettings
 
 app = FastAPI()
 
+
+project_settings = ProjectSettings()
 origins = [
-    "http://localhost:5173",   # !TODO: Move to .env
+    project_settings.FrontendURL,
 ]
 
 app.add_middleware(

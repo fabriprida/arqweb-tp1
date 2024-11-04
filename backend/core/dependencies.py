@@ -3,12 +3,12 @@ from core.settings import ProjectSettings
 
 
 def get_mongo_ds():
-    settings = ProjectSettings()
-    mongo_data_source = MongoDataSource(host=settings.MongoDBHost, 
-                    port=settings.MongoDBPort, 
-                    username=settings.MongoDBUser, 
-                    password=settings.MongoDBPassword,
-                    database=settings.MongoDBName)
+    project_settings = ProjectSettings()
+    mongo_data_source = MongoDataSource(host=project_settings.MongoDBHost, 
+                    port=project_settings.MongoDBPort, 
+                    username=project_settings.MongoDBUser, 
+                    password=project_settings.MongoDBPassword,
+                    database=project_settings.MongoDBName)
     try:
         yield mongo_data_source
     finally:
