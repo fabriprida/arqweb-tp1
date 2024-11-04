@@ -14,34 +14,20 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y docker-compose
-
     - name: build
       env:
         MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
         MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
       run: docker-compose build
 
-    - name: Configure AWS CLI
+    - name: Tag images for Docker Hub
       run: |
-        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws configure set default.region us-east-1
+        docker tag arqweb-tp1_backend ${{ secrets.DOCKER_HUB_USERNAME }}/arqweb-tp1_backend:latest
+        docker tag arqweb-tp1_frontend ${{ secrets.DOCKER_HUB_USERNAME }}/arqweb-tp1_frontend:latest
       
-    - name: Log in to AWS ECR
+    - name: push image to docker hub
+    
       run: |
-        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
-
-    - name: Create ECR repositories
-      run: |
-        aws ecr create-repository --repository-name arqweb-tp1_backend --region us-east-1 || true
-        aws ecr create-repository --repository-name arqweb-tp1_frontend --region us-east-1 || true
-
-    - name: Tag images for ECR
-      run: |
-        docker tag arqweb-tp1_backend ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/arqweb-tp1_backend:latest
-        docker tag arqweb-tp1_frontend ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/arqweb-tp1_frontend:latest
-
-    - name: Push images to AWS ECR
-      run: |
-        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/arqweb-tp1_backend:latest
-        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/arqweb-tp1_frontend:latest
+        docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_TOKEN }}
+        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/arqweb-tp1_backend:latest
+        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/arqweb-tp1_frontend:latest
