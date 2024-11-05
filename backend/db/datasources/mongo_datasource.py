@@ -5,16 +5,8 @@ from pymongo.database import Database
 
 class MongoDataSource:
 
-    def __init__(self, 
-                 host: str = "mongodb", 
-                 port: int = 27017, 
-                 username: str = None,
-                 password: str = None,
-                 database: str = None):
-        self._host = host
-        self._port = port
-        self._username = username
-        self._password = password
+    def __init__(self, connection_string: str, database: str):
+        self._connection_string = connection_string
         self._database = database
 
         self._client: Optional[MongoClient] = None
@@ -24,13 +16,11 @@ class MongoDataSource:
 
     def _connect(self):
         try:
-            host = self._host
-            port = self._port
-            username = self._username
-            password = self._password
-            self._client = MongoClient(f"mongodb://{username}:{password}@{host}:{port}/")
+            self._client = MongoClient(self._connection_string)
             self._db = self._client[self._database]
             self._client.admin.command('ping')
+            print("Connected to MongoDB")
+            #print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Connected to MongoDB")
 
         except ConnectionFailure as e:
             print(e)
